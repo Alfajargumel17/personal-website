@@ -20,12 +20,14 @@
 
   <!-- NAVBAR CENTER -->
   <nav class="navbar">
-    <ul>
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-    </ul>
+    <div class="nav-container">
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+      </ul>
+    </div>
   </nav>
 
   <!-- HOME -->
@@ -48,10 +50,10 @@
         <a href="#contact" class="btn">Contact Me</a>
 
         <div class="socials">
-          <a href="https://www.linkedin.com/in/jigumel" target="_blank"><i class='bx bxl-linkedin'></i></a>
-          <a href="https://github.com/Alfajargumel17" target="_blank"><i class='bx bxl-github'></i></a>
-          <a href="https://www.instagram.com/ji_gumel17" target="_blank"><i class='bx bxl-instagram'></i></a>
-          <a href="mailto:jigumel17@gmail.com"><i class='bx bxl-gmail'></i></a>
+          <a href="https://www.linkedin.com/in/jigumel" target="_blank" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+          <a href="https://github.com/Alfajargumel17" target="_blank" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+          <a href="https://www.instagram.com/ji_gumel17" target="_blank" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+          <a href="mailto:jigumel17@gmail.com" aria-label="Email"><i class='bx bxl-gmail'></i></a>
         </div>
       </div>
 
@@ -148,7 +150,7 @@
           <p>Assisted in managing data science laboratory activities, helping students with data processing, machine learning experiments, and research analysis.</p>
           <div class="experience-images">
             <a href="images/ser1.jpeg" target="_blank">
-              <img src="images/ser1.jpeg" alt="Laboratory Assistant " class="experience-img">
+              <img src="images/ser1.jpeg" alt="Laboratory Assistant 1" class="experience-img">
             </a>
             <a href="images/ser2.jpg" target="_blank">
               <img src="images/ser2.jpg" alt="Laboratory Assistant 2" class="experience-img">
@@ -158,8 +160,10 @@
             </a>
             <a href="images/ser4.jpg" target="_blank">
               <img src="images/ser4.jpg" alt="Laboratory Assistant 4" class="experience-img">
+            </a>
             <a href="images/ser5.jpg" target="_blank">
               <img src="images/ser5.jpg" alt="Laboratory Assistant 5" class="experience-img">
+            </a>
             <a href="images/ser6.jpg" target="_blank">
               <img src="images/ser6.jpg" alt="Laboratory Assistant 6" class="experience-img">            
             </a>
@@ -217,8 +221,36 @@
     
     navLinks.forEach(link => {
       link.addEventListener('click', function(e) {
+        e.preventDefault();
         navLinks.forEach(l => l.classList.remove('active'));
         this.classList.add('active');
+        
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Update active nav on scroll
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('.section');
+      const scrollPos = window.scrollY + 100;
+      
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        
+        if (scrollPos >= top && scrollPos < top + height) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            }
+          });
+        }
       });
     });
   </script>
